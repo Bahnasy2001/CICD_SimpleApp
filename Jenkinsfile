@@ -19,7 +19,7 @@ pipeline {
                 script {
                     echo "Copying kubeconfig to writable location..."
                     sh 'mkdir -p /tmp/.kube'
-                    sh 'cp $KUBECONFIG_CRED /tmp/.kube/config'
+                    sh 'cp $KUBECONFIG_CRED_ID /tmp/.kube/config'
                     
                     echo "Setting KUBECONFIG env var..."
                     env.KUBECONFIG = "/tmp/.kube/config"
