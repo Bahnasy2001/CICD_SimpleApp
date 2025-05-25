@@ -17,6 +17,9 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
+                    echo "Copying kubeconfig..."
+                    sh 'mkdir -p ~/.kube'
+                    sh 'cp $KUBECONFIG_CRED_ID ~/.kube/config'
                     // Load minikube docker into local daemon
                     sh 'eval $(minikube docker-env)'
                     sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
