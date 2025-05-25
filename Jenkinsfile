@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "jenkins-node-app"
         IMAGE_TAG = "latest"
-        KUBECONFIG_CRED_ID = 'minikube-kubeconfig'
+        KUBECONFIG_CRED_ID = credentials('minikube-kubeconfig')
     }
 
     stages {
