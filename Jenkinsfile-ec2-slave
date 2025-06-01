@@ -6,11 +6,6 @@ pipeline {
         IMAGE_NAME = "jenkins-node-app"
     }
     stages {
-        stage('Prepare') {
-            steps {
-                sh 'mkdir -p $DOCKER_CONFIG'
-            }
-        }
         stage('Build Image') {
             steps {
                 sh "docker build -t hassanbahnasy/${IMAGE_NAME}:${env.BUILD_NUMBER} ."
