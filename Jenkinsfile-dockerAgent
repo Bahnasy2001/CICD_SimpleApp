@@ -8,8 +8,15 @@ pipeline {
     environment {
         IMAGE_NAME = "jenkins-node-app"
         KUBECONFIG = credentials('minikube-kubeconfig')
+        HOME = '/tmp'
+        DOCKER_CONFIG = '/tmp/.docker'
     }
     stages {
+        stage('Prepare') {
+            steps {
+                sh 'mkdir -p $DOCKER_CONFIG'
+            }
+        }
         stage('Build Image') {
             steps {
                 sh "docker build -t hassanbahnasy/${IMAGE_NAME}:${env.BUILD_NUMBER} ."
