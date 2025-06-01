@@ -1,0 +1,27 @@
+pipeline {
+    agent {
+        docker {
+            image 'docker:20.10.16'  
+            args '-v /var/run/docker.sock:/var/run/docker.sock' 
+        }
+    }
+    environment {
+        IMAGE_NAME = "jenkins-node-app"
+        KUBECONFIG = credentials('minikube-kubeconfig')
+    }
+    stages {
+        stage('Build Image') {
+            steps {
+                sh 'docker build -t hassanbahnasy/${IMAGE_NAME}:${env.BUILD_NUMBER} .'
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+                    sh "docker push hassanbahnasy/${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                }
+            }
+        }
+    }
+}
