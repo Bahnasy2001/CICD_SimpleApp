@@ -24,7 +24,7 @@ pipeline {
                     echo "Setting KUBECONFIG env var..."
                     env.KUBECONFIG = "/tmp/.kube/config"
                     // Load minikube docker into local daemon
-                    sh 'eval $(minikube docker-env)'
+                    // sh 'eval $(minikube docker-env)'
                     
                     // Apply Kubernetes manifests
                     sh 'kubectl apply -f k8s/deployment.yaml'
