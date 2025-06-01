@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Load minikube docker into local daemon
-                    // sh 'eval $(minikube docker-env)'
+                    sh 'eval $(minikube docker-env)'
                     
                     // Apply Kubernetes manifests
                     sh 'kubectl apply -f k8s/deployment.yaml'
