@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: node-app
-          image: jenkins-node-app:latest
+          image: hassanbahnasy/jenkins-node-app:latest
           ports:
             - containerPort: 8082

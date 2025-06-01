@@ -10,17 +10,21 @@ pipeline {
     stages {
         stage('Build Image') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                sh 'docker build -t hassanbahnasy/${IMAGE_NAME}:${IMAGE_TAG} .'
             }
         }
-
+        stage('Docker Push') {
+            steps {
+                echo "docker push is running now" 
+                withCredentials([usernamePassword(credentialsId: 'Dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin" 
+                    sh "docker push hassanbahnasy/${IMAGE_NAME}:${IMAGE_TAG}" 
+                }
+            }
+        }
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    // Load minikube docker into local daemon
-                    sh 'eval $(minikube docker-env)'
-                    
-                    // Apply Kubernetes manifests
                     sh 'kubectl apply -f k8s/deployment.yaml'
                     sh 'kubectl apply -f k8s/service.yaml'
                 }
