@@ -25,8 +25,7 @@ pipeline {
                     env.KUBECONFIG = "/tmp/.kube/config"
                     // Load minikube docker into local daemon
                     sh 'eval $(minikube docker-env)'
-                    sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
-
+                    
                     // Apply Kubernetes manifests
                     sh 'kubectl apply -f k8s/deployment.yaml'
                     sh 'kubectl apply -f k8s/service.yaml'
